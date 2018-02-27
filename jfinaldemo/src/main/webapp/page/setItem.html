@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>手动上传章节内容</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>上传章节内容</div>
+        <form action="/novel/submitItemContent"  method="post">
+            <div>网站ID：<input type="text" name="itemId" /></div>
+            <br />
+            <div>章节内容html：
+                <textarea name="content" rows="3" cols="40">
+                </textarea>
+            </div>
+            
+            <div><input type="submit" value="提交" /></div>
+            
+        </form>
+    </body>
+</html>
