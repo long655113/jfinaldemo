@@ -1,10 +1,9 @@
-<%@page import="java.io.File,java.util.ArrayList,java.util.List" contentType="text/html" pageEncoding="UTF-8"%>
-        <%
+<%@page import="java.io.File,java.util.ArrayList,java.util.List" contentType="text/html" pageEncoding="UTF-8"%><%
             response.setCharacterEncoding("utf-8");
             String CONTENT_TYPE = "text/html; charset=utf-8";
             response.setContentType(CONTENT_TYPE);
             
-            String baseDirPath = "/var/ftp";    //用于替换文件目录，获取url路径
+            String baseDirPath = "/var/ftp/teacher/";    //用于替换文件目录，获取url路径
             File dir = new File("/var/ftp/teacher/music");
             
             if (!dir.exists() && !dir.isDirectory()) {
@@ -42,8 +41,9 @@
                         continue;
                     }
                     
+                    String webRoot = request.getContextPath();
                     String absolutePath = file.getAbsolutePath();
-                    String url = absolutePath.replace(baseDirPath, "");
+                    String url = webRoot + "/" + absolutePath.replace(baseDirPath, "");
                     
                     if (n > 0) {
                         out.println(",");

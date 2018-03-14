@@ -94,7 +94,7 @@ function deleteNovel() {
         return;
     }
     
-    var url = "/novel/delete";
+    var url = ctx + "/novel/delete";
     var query = params;
     doAjax(url, query, function(result) {
         var resultObj = JSON.parse(result);
@@ -124,7 +124,7 @@ function deleteNovelItem() {
         return;
     }
     
-    var url = "/novel/deleteItem";
+    var url = ctx + "/novel/deleteItem";
     var query = params;
     doAjax(url, query, function(result) {
         var resultObj = JSON.parse(result);
@@ -161,7 +161,7 @@ function deleteNovelBeforeItem() {
         return;
     }
     
-    var url = "/novel/deleteBeforeItem";
+    var url = ctx + "/novel/deleteBeforeItem";
     var query = params;
     doAjax(url, query, function(result) {
         var resultObj = JSON.parse(result);

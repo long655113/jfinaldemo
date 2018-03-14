@@ -5,7 +5,6 @@
  */
 package com.znima.dto;
 
-import com.znima.myenum.GetIndexWay;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;

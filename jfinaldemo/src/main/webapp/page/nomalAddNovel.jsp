@@ -26,28 +26,29 @@
 <meta property="og:novel:category" content="都市言情">
 <meta property="og:novel:author" content="${novel.author}">
 <meta property="og:novel:book_name" content="${novel.novelName}">
-<meta property="og:novel:read_url" content="/novel/novelIndex/${novel.id}">
-<meta property="og:url" content="/novel/novelIndex/${novel.id}">
+<meta property="og:novel:read_url" content="${pageContext.request.contextPath}/novel/novelIndex/${novel.id}">
+<meta property="og:url" content="${pageContext.request.contextPath}/novel/novelIndex/${novel.id}">
 <meta property="og:novel:status" content="连载中">
 <meta property="og:novel:author_link" content="http://zhannei.baidu.com/cse/search?s=8050404393306617446&amp;q=${novel.author}">
 <meta property="og:novel:update_time" content="2017-01-16 21:39">
 <meta property="og:novel:latest_chapter_name" content="${novelItems[fn:length(novelItems) - 1].title}">
-<meta property="og:novel:latest_chapter_url" content="/novel/read/${novelItems[fn:length(novelItems) - 1].id}">
-<link rel="stylesheet" type="text/css" href="/css/style.css">
-<script src="/js/push.js"></script>
-<script src="/js/common.js"></script>
-<script src="/js/ajax.js"></script>
+<meta property="og:novel:latest_chapter_url" content="${pageContext.request.contextPath}/novel/read/${novelItems[fn:length(novelItems) - 1].id}">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+<script src="${pageContext.request.contextPath}/js/push.js"></script>
+<script src="${pageContext.request.contextPath}/js/common.js"></script>
+<script src="${pageContext.request.contextPath}/js/ajax.js"></script>
+<%@include file="/page/header.jsp"%>
 
 </head>
 <body>
 <div class="header" id="bqgmb_head">
 <div class="back"><a href="javascript:history.go(-1);">返回</a></div>
 <h1 id="bqgmb_h1">${novel.novelName}</h1>
-<div class="back_r"><a href="/">首页</a></div>
+<div class="back_r"><a href="${pageContext.request.contextPath}/">首页</a></div>
 <!--<script>fixwidth();</script>-->
 </div>
 <div class="search">
-    <form name="articlesearch" action="/novel/novelAddNovel" method="post">
+    <form name="articlesearch" action="${pageContext.request.contextPath}/novel/novelAddNovel" method="post">
 <input type="hidden" name="s" value="8050404393306617446">
 <table cellpadding="0" cellspacing="0" style="width:100%;">
 <tbody><tr>
@@ -81,7 +82,7 @@
 </div>
 <div class="footer">
 <ul>
-<li><a href="/">首页</a></li>
+<li><a href="${pageContext.request.contextPath}/">首页</a></li>
 <li><a href="http://www.wenxuemi.com/files/article/html/0/169/">电脑版</a></li>
 <li><a href="http://m.wenxuemi.com/bookcase.php">书架</a></li>
 <li><a href="http://m.wenxuemi.com/bookcase.html">足迹</a></li>

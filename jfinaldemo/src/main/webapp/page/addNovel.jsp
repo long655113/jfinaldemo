@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>配置新小说网站</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%@include file="/page/header.jsp"%>
     </head>
     <body>
         <div>新增小说配置</div>
-        <form action="/novel/addNovel"  method="post">
+        <form action="${pageContext.request.contextPath}/novel/addNovel"  method="post">
             <div>网站名称：<input type="text" name="webSiteName" value="随梦小说网" /></div>
             <div>目录地址：<input type="text" name="indexUrl" value="http://www.suimeng.la/files/article/html/120/120901/" /></div>
             <div>

@@ -10,18 +10,19 @@
 <meta name="MobileOptimized" content="240"/>
 <meta name="applicable-device" content="mobile"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico"/>
 <meta http-equiv="Cache-Control" content="no-transform"/>
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
-<link rel="stylesheet" type="text/css" href="/css/read.css?version=2017071810"/>
-<script src="/js/ajax.js?version=201701312053" ></script>
-<script src="/js/read.js?version=201707091313" ></script>
-<script src="/js/cookie.js?version=test1" ></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/read.css?version=2017071810"/>
+<script src="${pageContext.request.contextPath}/js/ajax.js?version=201701312053" ></script>
+<script src="${pageContext.request.contextPath}/js/read.js?version=201707091313" ></script>
+<script src="${pageContext.request.contextPath}/js/cookie.js?version=test1" ></script>
+<%@include file="/page/header.jsp"%>
 <c:if test="${novelItem.content == null || novelItem.content==''}">
 <script>
     reFreshContent();
     function reFreshContent() {
-        var url = "/novel/refresh/${novelItem.id}";
+        var url = "${pageContext.request.contextPath}/novel/refresh/${novelItem.id}";
         var query = "{}";
         
         doAjax(url, query, function(result) {
@@ -40,13 +41,13 @@
 </head>
 <body id="nr_body" class="nr_all c_nr">
     <div class="header hidClass" id="_bqgmb_head">
-        <div class="back_r"><a href="/">首页</a></div>
+        <div class="back_r"><a href="${pageContext.request.contextPath}/">首页</a></div>
     </div>
     <div class="nr_set">
         <div class="set1 hid_icon" onclick="changToReadMode()"><div></div></div>
         <div id="huyandiv" class="set1 hidClass" onclick="javascript:location.href='${novelItem.url}'">原网页</div>
         <div class="set2 hidClass">
-            <div>》</div>
+            <div onclick="loadItem(2)">》</div>
             <div onclick="loadItem(5)">5</div>&nbsp;&nbsp;&nbsp;
             <div onclick="loadItem(10)">10</div>
             <div onclick="loadItem(15)">15</div>
@@ -56,10 +57,10 @@
         <div class="nr_page hidClass">
             <table cellpadding="0" cellspacing="0">
                 <tr class="itemDir1">
-                    <td class="prev"><a id="pt_prev" href="/novel/read/${novelItem.preId}">上一章</a></td>
-                    <td class="mulu"><a id="pt_mulu" href="/novel/novelIndex/${novelItem.norvelId}">目录</a></td>
+                    <td class="prev"><a id="pt_prev" href="${pageContext.request.contextPath}/novel/read/${novelItem.preId}">上一章</a></td>
+                    <td class="mulu"><a id="pt_mulu" href="${pageContext.request.contextPath}/novel/novelIndex/${novelItem.norvelId}">目录</a></td>
                     <c:if test="${novelItem.nextId != null}">
-                        <td class="next"><a id="pb_next" href="/novel/read/${novelItem.nextId}">下一章</a></td>
+                        <td class="next"><a id="pb_next" href="${pageContext.request.contextPath}/novel/read/${novelItem.nextId}">下一章</a></td>
                     </c:if>
 
                     <c:if test="${novelItem.nextId == null}">
@@ -80,10 +81,10 @@
         <div class="nr_page">
             <table cellpadding="0" cellspacing="0">
                 <tr class="itemDir2">
-                    <td class="prev"><a id="pb_prev" href="/novel/read/${novelItem.preId}">上一章</a></td>
-                    <td class="mulu"><a id="pb_mulu" href="/novel/novelIndex/${novelItem.norvelId}">目录</a></td>
+                    <td class="prev"><a id="pb_prev" href="${pageContext.request.contextPath}/novel/read/${novelItem.preId}">上一章</a></td>
+                    <td class="mulu"><a id="pb_mulu" href="${pageContext.request.contextPath}/novel/novelIndex/${novelItem.norvelId}">目录</a></td>
                     <c:if test="${novelItem.nextId != null}">
-                        <td class="next"><a id="pb_next" href="/novel/read/${novelItem.nextId}">下一章</a></td>
+                        <td class="next"><a id="pb_next" href="${pageContext.request.contextPath}/novel/read/${novelItem.nextId}">下一章</a></td>
                     </c:if>
 
                     <c:if test="${novelItem.nextId == null}">
@@ -94,7 +95,7 @@
         </div>
         <div class="footer">
             <ul>
-                <li><a href="/">首页</a></li>
+                <li><a href="${pageContext.request.contextPath}/">首页</a></li>
             </ul>
         </div>
     </div>

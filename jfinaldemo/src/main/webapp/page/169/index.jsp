@@ -33,13 +33,11 @@
 <meta property="og:novel:update_time" content="2017-01-16 21:39">
 <meta property="og:novel:latest_chapter_name" content="${novelItems[fn:length(novelItems) - 1].title}">
 <meta property="og:novel:latest_chapter_url" content="/novel/read/${novelItems[fn:length(novelItems) - 1].id}">
-<link rel="stylesheet" type="text/css" href="/css/style.css?version=20170920">
-<script src="/js/push.js"></script>
-<script src="/js/common.js"></script>
-<script src="/js/ajax.js"></script>
-<script src="/js/read.js?version=2017050524" ></script>
-<script src="/js/cookie.js" ></script>
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css?version=20170920">
+<script src="${pageContext.request.contextPath}/js/ajax.js"></script>
+<script src="${pageContext.request.contextPath}/js/read.js?version=2017050524" ></script>
+<script src="${pageContext.request.contextPath}/js/cookie.js" ></script>
+<%@include file="/page/header.jsp"%>
 </head>
 <body>
     <div class="header" id="bqgmb_head">
@@ -53,15 +51,15 @@
             <a href="javascript:novelListToRead();">取消</a>
         </div>
         <h1 id="bqgmb_h1" style="float: left;">${novel.novelName}</h1>
-        <div class="back_r"><a href="/">首页</a></div>
+        <div class="back_r"><a href="${pageContext.request.contextPath}/">首页</a></div>
         <div id="deleteBefore" class="back_r" style="display: none"><a href="javascript:deleteNovelBeforeItem();">删除之前章节</a></div>
         <div id="delete" class="back_r" style="display: none"><a href="javascript:deleteNovelItem();">删除</a></div>
         <!--<script>fixwidth();</script>-->
     </div>
     <div class="nav">
         <ul>
-            <li><a href="/">首页</a></li>
-            <li><a href="http://m.wenxuemi.com/sort.html">分类</a></li>
+            <li><a href="${pageContext.request.contextPath}/">首页</a></li>
+            <li><a href="/player">音乐</a></li>
             <li><a href="http://m.wenxuemi.com/quanben/">全本</a></li>
             <li><a href="http://m.wenxuemi.com/bookcase.php">书架</a></li>
             <li><a href="http://m.wenxuemi.com/bookcase.html">足迹</a></li>
@@ -85,28 +83,28 @@
         <div class="block">
         <div class="block_img2"><img src="${novel.image}" border="0" width="92" height="116" onerror="this.src=&#39;http://www.wenxuemi.com/modules/article/images/nocover.jpg&#39;"></div>
         <div class="block_txt2">
-        <p><a href="/novel/novelIndex/${novel.id}"></a></p><h2><a href="/novel/novelIndex/${novel.id}">${novel.novelName}</a></h2><p></p>
+        <p><a href="${pageContext.request.contextPath}/novel/novelIndex/${novel.id}"></a></p><h2><a href="${pageContext.request.contextPath}/novel/novelIndex/${novel.id}">${novel.novelName}</a></h2><p></p>
         <p>作者：${novel.author}</p>
         <p>分类：<a href="http://m.wenxuemi.com/dushi/">都市言情</a></p>
         <p>状态：连载中</p>
         <p>更新：<fmt:formatDate type="both" 
                     dateStyle="medium" timeStyle="medium" 
                     value="${lastestItem.createTime}" /></p>
-        <p>最新：<a href="/novel/read/${lastestItem.id}">${lastestItem.title}</a></p>
+        <p>最新：<a href="${pageContext.request.contextPath}/novel/read/${lastestItem.id}">${lastestItem.title}</a></p>
         </div>
         </div>
         <div style="clear:both"></div>
         <div class="ablum_read">
             <span class="margin_right">
                 <c:if test="${novelItems != null && !empty novelItems}">
-                    <a href="/novel/read/${novelItems[0].id}">开始阅读</a>
+                    <a href="${pageContext.request.contextPath}/novel/read/${novelItems[0].id}">开始阅读</a>
                 </c:if>
             </span>
             <span class="margin_right">
-                <a href="/novel/download/${novel.id}">下载</a>
+                <a href="${pageContext.request.contextPath}/novel/download/${novel.id}">下载</a>
             </span>
             <span class="margin_right">
-                <a href="/novel/download/${novel.id}?fileType=pdf">下载pdf</a>
+                <a href="${pageContext.request.contextPath}/novel/download/${novel.id}?fileType=pdf">下载pdf</a>
             </span>
         </div>
         <div class="intro">简介</div>
@@ -115,9 +113,9 @@
         </div>
         <div class="intro">
             正文&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/novel/novelIndex/${novel.id}?page=${currentPage}&sortType=asc" class="login_tips">[正序]</a>
+            <a href="${pageContext.request.contextPath}/novel/novelIndex/${novel.id}?page=${currentPage}&sortType=asc" class="login_tips">[正序]</a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/novel/novelIndex/${novel.id}?page=${currentPage}&sortType=desc" class="login_tips">[倒序]</a>
+            <a href="${pageContext.request.contextPath}/novel/novelIndex/${novel.id}?page=${currentPage}&sortType=desc" class="login_tips">[倒序]</a>
         </div>
         <c:if test="${novelItems != null && !empty novelItems}">
             <ul class="chapter">
@@ -126,13 +124,13 @@
                         <span class="editStatus">
                             <input type="checkbox" name="novelItemId" value="${item.id}" /><span onclick="checkItem(this)">${item.title}</span>
                         </span>
-                        <a href="/novel/read/${item.id}" class="readLink">${item.title}</a>
+                        <a href="${pageContext.request.contextPath}/novel/read/${item.id}" class="readLink">${item.title}</a>
                     </li>
                 </c:forEach>
                     
             </ul>
         </c:if>
-        <li><a href="/novel/update/${novel.id}">更新</a></li>
+        <li><a href="${pageContext.request.contextPath}/novel/update/${novel.id}">更新</a></li>
         
         <c:if test="${pageNumbers != null && !empty pageNumbers}">
             <div class="listpage">
@@ -142,13 +140,13 @@
                             class="before"
                         </c:if>
                         <c:if test="${1 < currentPage}">
-                            href="/novel/novelIndex/${novel.id}?page=${currentPage-1}&sortType=${sortType}"
+                            href="${pageContext.request.contextPath}/novel/novelIndex/${novel.id}?page=${currentPage-1}&sortType=${sortType}"
                             class="onclick"
                         </c:if>
                         >上一页</a>
                 </span>
                 <span class="middle">
-                    <select name="pageselect" onchange="self.location.href='/novel/novelIndex/${novel.id}?page=' + options[selectedIndex].value + '&sortType=${sortType}'">
+                    <select name="pageselect" onchange="self.location.href='${pageContext.request.contextPath}/novel/novelIndex/${novel.id}?page=' + options[selectedIndex].value + '&sortType=${sortType}'">
                         <c:forEach var="item" items="${pageNumbers}" >
                             <option value="${item}" 
                                 <c:if test="${item == currentPage}">
@@ -169,7 +167,7 @@
                                 class="before"
                             </c:if>
                             <c:if test="${fn:length(pageNumbers) > currentPage}">
-                                href="/novel/novelIndex/${novel.id}?page=${currentPage+1}&sortType=${sortType}"
+                                href="${pageContext.request.contextPath}/novel/novelIndex/${novel.id}?page=${currentPage+1}&sortType=${sortType}"
                                 class="onclick"
                             </c:if>
                             >下一页</a>
@@ -181,7 +179,7 @@
     <script>style_bottom()</script>
     <div class="footer">
         <ul>
-            <li><a href="/">首页</a></li>
+            <li><a href="${pageContext.request.contextPath}/">首页</a></li>
 <!--            <li><a href="http://www.wenxuemi.com/files/article/html/0/169/">电脑版</a></li>
             <li><a href="http://m.wenxuemi.com/bookcase.php">书架</a></li>
             <li><a href="http://m.wenxuemi.com/bookcase.html">足迹</a></li>-->

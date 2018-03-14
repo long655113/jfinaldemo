@@ -53,7 +53,7 @@ public class NovelController extends Controller {
         GetNovelConfig config = GetNovelConfig.dao.findByUrl(urlRoot);
         if (config == null) {
             logger.info("未找到网站配置");
-            render("/page/addNovel.html");
+            render("/page/addNovel.jsp");
             return;
         }
         
