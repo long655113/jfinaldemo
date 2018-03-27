@@ -4,6 +4,19 @@
     Author     : Administrator
 --%>
 
+<%@page import="java.net.URLDecoder"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.io.File"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.io.IOException"%>
+<%@page import="java.nio.file.attribute.BasicFileAttributes"%>
+<%@page import="java.nio.file.attribute.BasicFileAttributeView"%>
+<%@page import="java.nio.file.Files"%>
+<%@page import="java.nio.file.Path"%>
+<%@page import="java.nio.file.Paths"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -665,12 +678,89 @@
 
     i18nTemplate.process(document, loadTimeData);
 
-</script><script>start("/player/");</script>
-<script>onHasParentDirectory();</script>
-<script>addRow("Thumbs.db", "Thumbs.db", 0, 74240, "72.5 kB", 1400976000, "2014/5/25 上午8:00:00");</script>
-<script>addRow("avatar", "avatar", 1, 0, "0 B", 1517010120, "2018/1/27 上午7:42:00");</script>
-<script>addRow("css", "css", 1, 0, "0 B", 1517010120, "2018/1/27 上午7:42:00");</script>
-<script>addRow("fonts", "fonts", 1, 0, "0 B", 1517010120, "2018/1/27 上午7:42:00");</script>
-<script>addRow("index.html", "index.html", 0, 2459, "2.4 kB", 1519925040, "2018/3/2 上午1:24:00");</script>
-<script>addRow("js", "js", 1, 0, "0 B", 1518398700, "2018/2/12 上午9:25:00");</script>
-<script>addRow("ljr_hy.mp3", "ljr_hy.mp3", 0, 2459, "4.3 MB", 1519925040, "2018/3/2 上午1:24:00");</script>
+</script>
+    <%
+    String requestUri = pageContext.getRequest().getAttribute("javax.servlet.forward.request_uri") + "";
+    
+    if (requestUri.equals("null")) {
+        requestUri = "/";
+    }
+    
+    if (!requestUri.equals("/")) {
+        out.println("<script>onHasParentDirectory();</script>");
+    }
+    
+    out.flush();
+    %>
+
+<%
+    class FtpFile {
+
+        public String createFtpFileMsg(String filePath) throws IOException {
+            Path testPath = Paths.get(filePath);
+            Path fileName = testPath.getFileName();
+
+            BasicFileAttributeView basicView = Files.getFileAttributeView(testPath, BasicFileAttributeView.class);
+            BasicFileAttributes basicFileAttributes = basicView.readAttributes();
+
+            Date createTime = new Date(basicFileAttributes.creationTime().toMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd aaahh:mm:ss");
+            String createTimeStr = sdf.format(createTime);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("<script>addRow(\"").append(fileName).append("\", \"").append(fileName).append("\", ");   //addRow("avatar", "avatar", 
+            if (basicFileAttributes.isDirectory()) {
+                sb.append(1);
+                sb.append(", ").append(0);
+                sb.append(", \"").append("0 B").append("\", ")
+                        .append(createTime.getTime() / 1000).append(", \"")
+                        .append(createTimeStr).append("\");");
+            } else {
+                sb.append(0);
+                long size = basicFileAttributes.size();
+
+                sb.append(", ").append(size);
+
+                //折算 GB，MB，KB
+                String sizeMsg = size + " B";
+                if (size > 1024 * 1024 * 1024) {
+                    sizeMsg = String.format("%.2f", size / (1024.0 * 1024 * 1024)) + " GB";
+                } else if (size > 1024 * 1024) {
+                    sizeMsg = String.format("%.2f", size / (1024.0 * 1024)) + " MB";
+                } else if (size > 1024) {
+                    sizeMsg = String.format("%.2f", size / 1024.0) + " kB";
+                }
+
+                sb.append(", \"").append(sizeMsg).append("\", ")
+                        .append(createTime.getTime() / 1000).append(", \"")
+                        .append(createTimeStr).append("\");");
+            }
+            sb.append("</script>");
+
+            return sb.toString();
+        }
+    }
+    
+    
+    Set<String> excludeFileName = new HashSet();    //这个集合里的文件 名会被过滤
+    excludeFileName.add("index.jsp");
+    
+    String realPath = application.getRealPath("/");
+    String startDir = URLDecoder.decode((realPath + requestUri).replace("//", "/"),"UTF-8");
+    
+    File dir = new File(startDir);
+    File[] files = dir.listFiles();
+    FtpFile ftpFile = new FtpFile();
+    for (File f : files) {
+        String fName = f.getName();
+        if (excludeFileName.contains(fName)) {
+            continue;
+        }
+        
+        String filePath = f.getAbsolutePath();
+        String html = ftpFile.createFtpFileMsg(filePath);
+        out.println(html);
+    }
+	
+    out.flush();
+%>

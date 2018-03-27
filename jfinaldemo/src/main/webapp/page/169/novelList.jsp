@@ -34,12 +34,12 @@
             <div class="intro">小说列表</div>
             <c:if test="${novels != null && !empty novels}">
                 <ul class="chapter">
-                    <c:forEach var="item" items="${novels}" >
+                    <c:forEach var="item" items="${novels}" varStatus="status" >
                         <li>
                             <span class="editStatus">
-                                <input type="checkbox" name="novelId" value="${item.id}" /><span onclick="checkItem(this)">${item.novelName}</span>
+                                <input type="checkbox" name="novelId" value="${item.id}" /><span onclick="checkItem(this)">${ status.index + 1}.${item.novelName}</span>
                             </span>
-                            <a href="${pageContext.request.contextPath}/novel/novelIndex/${item.id}" class="readLink">${item.novelName}</a></li>
+                            <a href="${pageContext.request.contextPath}/novel/novelIndex/${item.id}" class="readLink">${ status.index + 1}.${item.novelName}</a></li>
                     </c:forEach>
                 </ul>
             </c:if>
