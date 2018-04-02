@@ -13,10 +13,11 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico"/>
 <meta http-equiv="Cache-Control" content="no-transform"/>
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/read.css?version=2017071810"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/read.css?version=2018032723"/>
 <script src="${pageContext.request.contextPath}/js/ajax.js?version=201701312053" ></script>
 <script src="${pageContext.request.contextPath}/js/read.js?version=201707091313" ></script>
 <script src="${pageContext.request.contextPath}/js/cookie.js?version=test1" ></script>
+<script src="${pageContext.request.contextPath}/js/runPage.js?version=20180328" ></script>
 <%@include file="/page/header.jsp"%>
 <c:if test="${novelItem.content == null || novelItem.content==''}">
 <script>
