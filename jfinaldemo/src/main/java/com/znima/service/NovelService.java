@@ -266,7 +266,7 @@ public class NovelService {
                 return;
             }
 
-            if (updateItemList.size() > 20) {
+            if (updateItemList.size() > 60) {
                 logger.info("非常规更新->last:" + lastItemDto + ", list:" + updateItemList);
             }
 

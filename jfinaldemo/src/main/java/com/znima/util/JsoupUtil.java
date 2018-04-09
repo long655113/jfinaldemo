@@ -161,6 +161,12 @@ public class JsoupUtil {
         }
         Elements indexA = chapterEle.getElementsByTag("a");
         ListIterator<Element> listIterator = indexA.listIterator();
+        
+        if (!indexUrl.endsWith("/")) {
+            indexUrl = indexUrl.substring(0, indexUrl.lastIndexOf("/") + 1);
+        }
+        
+        String lastUrl = null;
         while (listIterator.hasNext()) {
             Element a = listIterator.next();
             String url = a.attr("href");
@@ -168,12 +174,24 @@ public class JsoupUtil {
             NovelItemDto item = new NovelItemDto();
             item.setItemName(a.text());
             if (url.startsWith("/")) {
-                item.setUrl(rootUrl + url);
+                url = rootUrl + url;
             } else if (url.toLowerCase().startsWith("http")) {
-                item.setUrl(url);
+                
             } else {
-                item.setUrl(indexUrl + url);
+                url = indexUrl + url;
             }
+            item.setUrl(url);
+            
+            if (lastUrl == null) {
+                lastUrl = url;
+            } else {
+                if (lastUrl.equals(url)) {
+                    continue;
+                } else {
+                    lastUrl = url;
+                }
+            }
+            
             novelDto.getItems().add(item);
         }
         
