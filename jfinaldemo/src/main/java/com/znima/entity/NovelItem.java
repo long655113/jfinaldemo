@@ -27,6 +27,7 @@ public class NovelItem extends Model<NovelItem> {
     private String contentFile; //章节内容文件
     private String remark;    //备注
     private Date createTime;  //创建时间
+    private Integer file_length;    //章节内容长度
 
     public Integer getId() {
         return id;
@@ -108,6 +109,14 @@ public class NovelItem extends Model<NovelItem> {
         this.createTime = createTime;
     }
 
+    public Integer getFile_length() {
+        return file_length;
+    }
+
+    public void setFile_length(Integer file_length) {
+        this.file_length = file_length;
+    }
+
     public static final NovelItem dao = new NovelItem();
 
     public NovelItem toBean() {
@@ -122,6 +131,8 @@ public class NovelItem extends Model<NovelItem> {
 //        item.content = item.get("content");   //章节内容
         item.remark = item.get("remark");    //备注
         item.createTime = item.get("createTime");  //创建时间
+        
+        item.file_length = item.get("FILE_LENGTH"); //章节内容
         
         item.contentFile = item.get("contentFile"); //章节内容文件
         if (item.contentFile != null && !item.contentFile.trim().equals("")) {
@@ -177,6 +188,26 @@ public class NovelItem extends Model<NovelItem> {
                 "where CONTENTFILE  is null \n" +
                 "order by random() \n" +
                 "limit " + limit);
+
+        for (NovelItem item : novels) {
+            item.toBean();
+        }
+
+        return novels;
+    }
+    
+    /**
+     * 随机获取小章节
+     * @param smallFileLength
+     * @param limit
+     * @return 
+     */
+    public List<NovelItem> findSmallItems(int smallFileLength, int limit) {
+        List<NovelItem> novels = dao.find("SELECT norvelId, createTime, id, contentFile \n"
+                + "FROM NOVELITEM  \n" +
+                "where FILE_LENGTH < " + smallFileLength + 
+                " order by random() \n" +
+                " limit " + limit);
 
         for (NovelItem item : novels) {
             item.toBean();

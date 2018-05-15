@@ -6,6 +6,7 @@
 package com.znima.util;
 
 import com.znima.dto.GetNovelConfigDto;
+import com.znima.myenum.GetNovelNameWay;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -102,5 +103,19 @@ public class JsoupUtilTest {
         while((l = in.read(buf))!=-1){
             os.write(buf, 0, l);
         }
+    }
+    
+    @Test
+    public void testGetAuthor() {
+         String url = "http://www.55dushu.com/book/96/96696/";
+        GetNovelConfigDto config = new GetNovelConfigDto();
+        config.setGetNovelNameWay(GetNovelNameWay.CLASS);
+        config.setGetNovelNameWayValue(2);
+        String[] novelNameKeys = {"mu_h1", "h1"};
+        config.setNovelNameKeys(novelNameKeys);
+        
+        String novelName = config.getGetNovelNameWay().getNovelName(JsoupUtil.getDoc(url), novelNameKeys);
+        
+        System.out.println("novelName:" + novelName);
     }
 }

@@ -195,6 +195,8 @@ public class NovelService {
         boolean result = FileUtil.saveFile(itemContent, configFilePath);
         if (result) {
             item.set("contentFile", configFilePath);
+            int length = itemContent.length();
+            item.set("file_length", length);
             item.update();
 
             msg.setCode("0000");

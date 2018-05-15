@@ -17,6 +17,7 @@ import com.znima.controller.NovelController;
 import com.znima.entity.GetNovelConfig;
 import com.znima.entity.Novel;
 import com.znima.entity.NovelItem;
+import com.znima.entity.RefreshMark;
 
 public class DemoConfig extends JFinalConfig {
 
@@ -57,6 +58,7 @@ public class DemoConfig extends JFinalConfig {
         arp.addMapping("novel", "id", Novel.class);
         arp.addMapping("novelItem", "id", NovelItem.class);
         arp.addMapping("getNovelConfig", "id", GetNovelConfig.class);
+        arp.addMapping("refresh_mark", "id", RefreshMark.class);
         
         //定时任务 quartz
         QuartzPlugin quartz = new QuartzPlugin();
@@ -65,6 +67,10 @@ public class DemoConfig extends JFinalConfig {
         
         quartz = new QuartzPlugin();
         quartz.setJobs("getContentJobs.properties");
+        me.add(quartz);
+        
+        quartz = new QuartzPlugin();
+        quartz.setJobs("refreshContentJobs.properties");
         me.add(quartz);
     }
 
