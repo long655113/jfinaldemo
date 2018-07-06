@@ -197,7 +197,7 @@ public class NovelItem extends Model<NovelItem> {
     }
     
     /**
-     * 随机获取小章节
+     * 随机获取两天内小章节
      * @param smallFileLength
      * @param limit
      * @return 
@@ -205,7 +205,7 @@ public class NovelItem extends Model<NovelItem> {
     public List<NovelItem> findSmallItems(int smallFileLength, int limit) {
         List<NovelItem> novels = dao.find("SELECT norvelId, createTime, id, contentFile \n"
                 + "FROM NOVELITEM  \n" +
-                "where FILE_LENGTH < " + smallFileLength + 
+                "where DAY_OF_YEAR(now()) - DAY_OF_YEAR(createTime) < 2 and FILE_LENGTH < " + smallFileLength + 
                 " order by random() \n" +
                 " limit " + limit);
 
