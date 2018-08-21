@@ -46,6 +46,7 @@
     </div>
     <div class="nr_set">
         <div class="set1 hid_icon" onclick="changToReadMode()"><div></div></div>
+	<div id="huyandiv" class="set1 hidClass" onclick="javascript:window.open('http://zjl.hmxingkong.com:65511/speech/speechUrl?url='+ window.location.href)">转语音</div>
         <div id="huyandiv" class="set1 hidClass" onclick="javascript:location.href='${novelItem.url}'">原网页</div>
         <div class="set2 hidClass">
             <div onclick="loadItem(2)">》</div>
