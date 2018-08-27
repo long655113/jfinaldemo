@@ -56,9 +56,9 @@ public class JsoupUtilTest {
     
     @Test
     public void testGetItemContent3() {
-        String url = "http://www.biquge5200.com/2_2599/1854656.html";
+        String url = "http://www.shuqiba.com/122/122705/17319674.html";
         GetNovelConfigDto config = new GetNovelConfigDto();
-        config.setItemKey("content");
+        config.setItemKey("BookText");
         config.setGetContentWayValue(1);
         String itemContent = config.getGetContentWay().getContent(url, config.getItemKey());
         logger.info("itemContent:" + itemContent);

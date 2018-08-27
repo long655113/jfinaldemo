@@ -15,7 +15,7 @@
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/read.css?version=2018032723"/>
 <script src="${pageContext.request.contextPath}/js/ajax.js?version=201701312053" ></script>
-<script src="${pageContext.request.contextPath}/js/read.js?version=201707091313" ></script>
+<script src="${pageContext.request.contextPath}/js/read.js?version=2018082423" ></script>
 <script src="${pageContext.request.contextPath}/js/cookie.js?version=test1" ></script>
 <script src="${pageContext.request.contextPath}/js/runPage.js?version=20180328" ></script>
 <%@include file="/page/header.jsp"%>
@@ -46,8 +46,8 @@
     </div>
     <div class="nr_set">
         <div class="set1 hid_icon" onclick="changToReadMode()"><div></div></div>
-	<div id="huyandiv" class="set1 hidClass" onclick="javascript:window.open('http://zjl.hmxingkong.com:65511/speech/speechUrl?url='+ window.location.href)">转语音</div>
-        <div id="huyandiv" class="set1 hidClass" onclick="javascript:location.href='${novelItem.url}'">原网页</div>
+	<div id="huyandiv" class="set1 hidClass" onclick="javascript:toVoice()">语音</div>
+        <div id="huyandiv" class="set1 hidClass" onclick="javascript:location.href='${novelItem.url}'">网页</div>
         <div class="set2 hidClass">
             <div onclick="loadItem(2)">》</div>
             <div onclick="loadItem(5)">5</div>&nbsp;&nbsp;&nbsp;

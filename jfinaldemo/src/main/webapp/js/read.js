@@ -2,6 +2,7 @@
 
 var currentItemCount = 1;
 var currentStatus = -1;
+var urlArray = new Array();
     
 function loadItem(itemCount) {
 
@@ -40,8 +41,22 @@ function loadItem(itemCount) {
             currentStatus = -1;
             document.getElementsByClassName("nr_set")[0].removeAttribute("style");
         }
+        urlArray[urlArray.length] = url;
 
     }, "POST", 0);
+}
+
+function dedupe(array){
+    return Array.from(new Set(array));
+}
+
+function toVoice() {
+//    var urls = dedupe(urlArray);
+    var params = "url=" + urlArray[0];
+    for (var i = 1; i < urlArray.length; i++) {
+        params += "&url=" + urlArray[i];
+    }
+    window.open('http://zjl.hmxingkong.com/speech/toAudio?'+ params);
 }
 
 function novelListToEdit() {
@@ -225,4 +240,5 @@ ready(function() {
         var element = hidClass[i];
         element.style.display = style;
     }
+    urlArray[0] = window.location.href;
 });
