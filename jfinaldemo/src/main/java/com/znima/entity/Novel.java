@@ -100,7 +100,7 @@ public class Novel extends Model<Novel> {
      * @return 
      */
     public List<NovelItem> getNovelItems() {
-        List<NovelItem> list = NovelItem.dao.find("SELECT id,url,title, createTime FROM `novelItem` WHERE norvelId=" + get("id") + " order by id");
+        List<NovelItem> list = NovelItem.dao.find("SELECT id,url,title, createTime, file_length FROM `novelItem` WHERE norvelId=" + get("id") + " order by id");
         
         for (NovelItem item : list) {
             item.toBean();

@@ -41,10 +41,11 @@ public class DemoConfig extends JFinalConfig {
 //                "root", "1qaz2wsx");
 //        // 配置mysql驱动
 //        cp.setDriverClass("com.mysql.jdbc.Driver");
-        
+//        jdbc:h2:tcp://zjl.hmxingkong.com:9092/~/jfinaldemo;MODE=MSSQLServer;DATABASE_TO_UPPER=FALSE
 //        C3p0Plugin cp = new C3p0Plugin("jdbc:h2:~/jfinaldemo;MODE=MSSQLServer", "root", "1qaz2wsx");
 //        cp.setDriverClass("org.h2.Driver");
         DruidPlugin dp = new DruidPlugin("jdbc:h2:~/jfinaldemo;MODE=MSSQLServer", "root", "1qaz2wsx");
+//        DruidPlugin dp = new DruidPlugin("jdbc:h2:tcp://zjl.hmxingkong.com:9092/~/jfinaldemo;MODE=MSSQLServer;DATABASE_TO_UPPER=FALSE", "root", "1qaz2wsx");
         dp.setDriverClass("org.h2.Driver");
         
         me.add(dp);
@@ -61,17 +62,17 @@ public class DemoConfig extends JFinalConfig {
         arp.addMapping("refresh_mark", "id", RefreshMark.class);
         
         //定时任务 quartz
-        QuartzPlugin quartz = new QuartzPlugin();
-        quartz.setJobs("jobs.properties");
-        me.add(quartz);
-        
-        quartz = new QuartzPlugin();
-        quartz.setJobs("getContentJobs.properties");
-        me.add(quartz);
-        
-        quartz = new QuartzPlugin();
-        quartz.setJobs("refreshContentJobs.properties");
-        me.add(quartz);
+//        QuartzPlugin quartz = new QuartzPlugin();
+//        quartz.setJobs("jobs.properties");
+//        me.add(quartz);
+//        
+//        quartz = new QuartzPlugin();
+//        quartz.setJobs("getContentJobs.properties");
+//        me.add(quartz);
+//        
+//        quartz = new QuartzPlugin();
+//        quartz.setJobs("refreshContentJobs.properties");
+//        me.add(quartz);
     }
 
     @Override

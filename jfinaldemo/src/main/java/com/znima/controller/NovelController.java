@@ -12,6 +12,7 @@ import com.znima.entity.GetNovelConfig;
 import com.znima.entity.Novel;
 import com.znima.entity.NovelItem;
 import com.znima.result.Msg;
+import com.znima.result.VoiceInfo;
 import com.znima.service.NovelService;
 import com.znima.util.JsoupUtil;
 import java.io.IOException;
@@ -232,5 +233,40 @@ public class NovelController extends Controller {
         Msg msg = this.novelService.updateContent(itemId, content);
         
         renderJson(msg);
+    }
+    
+    public void voice() {
+        Integer novelId = getParaToInt();
+        Novel novel = Novel.dao.findById(novelId).toBean();
+        List<NovelItem> novelItems = Novel.dao.findById(novelId).getNovelItems();
+        
+        String artist = novel.getNovelName();
+        String avatarURL = novel.getImage();
+        
+        List<VoiceInfo> voices = new ArrayList();
+        for (NovelItem item : novelItems) {
+            
+            Integer itemLength = item.getFile_length();
+            if (itemLength == null) {
+                itemLength = 5000;
+            }
+            
+            String musicAlbum = item.getTitle() + ".mp3";
+            String musicName = item.getTitle();
+            String musicTime = (itemLength / 8) + "";
+            String musicURL = "http://zjl.hmxingkong.com/speech/speechUrl?url=http://zjl.hmxingkong.com/novel/novel/read/" + item.getId();
+            
+            VoiceInfo voiceInfo = new VoiceInfo();
+            voiceInfo.setArtist(artist);
+            voiceInfo.setAvatarURL(avatarURL);
+            voiceInfo.setMusicAlbum(musicAlbum);
+            voiceInfo.setMusicName(musicName);
+            voiceInfo.setMusicTime(musicTime);
+            voiceInfo.setMusicURL(musicURL);
+            
+            voices.add(voiceInfo);
+        }
+        
+        renderJson(voices);
     }
 }
