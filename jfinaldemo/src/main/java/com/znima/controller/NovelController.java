@@ -249,6 +249,7 @@ public class NovelController extends Controller {
             Integer itemLength = item.getFile_length();
             if (itemLength == null) {
                 itemLength = 5000;
+                this.novelService.refresh(item.getId());
             }
             
             String musicAlbum = item.getTitle() + ".mp3";

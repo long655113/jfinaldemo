@@ -62,17 +62,17 @@ public class DemoConfig extends JFinalConfig {
         arp.addMapping("refresh_mark", "id", RefreshMark.class);
         
         //定时任务 quartz
-//        QuartzPlugin quartz = new QuartzPlugin();
-//        quartz.setJobs("jobs.properties");
-//        me.add(quartz);
-//        
-//        quartz = new QuartzPlugin();
-//        quartz.setJobs("getContentJobs.properties");
-//        me.add(quartz);
-//        
-//        quartz = new QuartzPlugin();
-//        quartz.setJobs("refreshContentJobs.properties");
-//        me.add(quartz);
+        QuartzPlugin quartz = new QuartzPlugin();
+        quartz.setJobs("jobs.properties");
+        me.add(quartz);
+        
+        quartz = new QuartzPlugin();
+        quartz.setJobs("getContentJobs.properties");
+        me.add(quartz);
+        
+        quartz = new QuartzPlugin();
+        quartz.setJobs("refreshContentJobs.properties");
+        me.add(quartz);
     }
 
     @Override

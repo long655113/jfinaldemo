@@ -221,7 +221,7 @@
             </plugin>
         </plugins>
         <finalName>
-            jfinaldemo-2.0.8
+            jfinaldemo-2.0.9
         </finalName>
     </build>
 
