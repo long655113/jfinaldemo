@@ -5,12 +5,14 @@
  */
 package com.znima.util;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.znima.dto.GetNovelConfigDto;
 import com.znima.dto.NovelDto;
 import com.znima.dto.NovelItemDto;
 import com.znima.myenum.GetIndexWay;
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -18,13 +20,15 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ListIterator;
-import org.jsoup.Connection;
+import java.util.logging.Level;
+import org.apache.commons.logging.LogFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.jsoup.Connection;
 
 /**
  *
@@ -54,7 +58,7 @@ public class JsoupUtil {
             connect.header("Host",urlRoot);
             connect.header("Upgrade-Insecure-Requests","1");
             connect.header("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.10 Safari/537.36");
-            Document doc = connect.timeout(7000).get();
+            Document doc = connect.maxBodySize(0).timeout(7000).get();
             return doc;
         } catch (IOException ex) {
             logger.error("访问" + url + "失败:" + ex.getMessage(), ex);
@@ -62,6 +66,38 @@ public class JsoupUtil {
         return null;
     }
     
+    public static Document getDoc2(String url) {
+        //构造一个webClient 模拟Chrome 浏览器
+        WebClient webClient = new WebClient(BrowserVersion.CHROME);
+        //屏蔽日志信息
+        LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log",
+                "org.apache.commons.logging.impl.NoOpLog");
+        java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
+        //支持JavaScript
+        webClient.getOptions().setJavaScriptEnabled(true);
+        webClient.getOptions().setCssEnabled(false);
+        webClient.getOptions().setActiveXNative(false);
+        webClient.getOptions().setCssEnabled(false);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions().setTimeout(5000);
+        HtmlPage rootPage;
+        try {
+            rootPage = webClient.getPage(url);
+            //设置一个运行JavaScript的时间
+            webClient.waitForBackgroundJavaScript(5000);
+            String html = rootPage.asXml();
+            Document document = Jsoup.parse(html);
+
+            return document;
+        } catch (IOException ex) {
+            logger.error("访问" + url + "失败:" + ex.getMessage(), ex);
+        } catch (FailingHttpStatusCodeException ex) {
+            logger.error("访问" + url + "失败:" + ex.getMessage(), ex);
+        }
+        
+        return null;
+    }
     
     public static void main(String[] args) {
         

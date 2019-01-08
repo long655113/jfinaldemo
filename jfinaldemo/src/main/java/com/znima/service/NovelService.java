@@ -179,6 +179,9 @@ public class NovelService {
 //        configDto.setItemKey(config.get("itemKey") + "");
 
         String itemContent = configDto.getGetContentWay().getContent(url, configDto.getItemKey());
+        if (itemContent == null || itemContent.trim().equals("") || itemContent.length() < 100) {
+            itemContent = configDto.getGetContentWay2().getContent(url, configDto.getItemKey());
+        }
 
         if (itemContent == null || itemContent.trim().equals("")) {
             msg.setCode("0112");

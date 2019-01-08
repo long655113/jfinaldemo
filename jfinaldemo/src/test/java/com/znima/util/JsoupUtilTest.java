@@ -36,9 +36,9 @@ public class JsoupUtilTest {
 
     @Test
     public void testGetItemContent() {
-        String url = "http://www.lread.net/read/36620/15848349.html";
+        String url = "http://www.xinbiquge.com/52_52796/350.html";
         GetNovelConfigDto config = new GetNovelConfigDto();
-        config.setItemKey("booktext");
+        config.setItemKey("content");
         config.setGetContentWayValue(1);
         String itemContent = config.getGetContentWay().getContent(url, config.getItemKey());
         logger.info("itemContent:" + itemContent);

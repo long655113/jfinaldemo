@@ -8,6 +8,7 @@ package com.znima.dto;
 import com.znima.entity.GetNovelConfig;
 import com.znima.myenum.GetAuthorWay;
 import com.znima.myenum.GetContentWay;
+import com.znima.myenum.GetContentWay2;
 import com.znima.myenum.GetDescWay;
 import com.znima.myenum.GetImgWay;
 import com.znima.myenum.GetIndexWay;
@@ -57,6 +58,7 @@ public class GetNovelConfigDto implements Serializable {
 
     private Integer getContentWayValue;
     private GetContentWay getContentWay;
+    private GetContentWay2 getConentWay2;
     private String itemKey; //章节KEY
     
     public GetNovelConfigDto() {}
@@ -326,6 +328,7 @@ public class GetNovelConfigDto implements Serializable {
     public void setGetContentWayValue(Integer getContentWayValue) {
         this.getContentWayValue = getContentWayValue;
         this.getContentWay = GetContentWay.getIndexWayBayValue(getContentWayValue);
+        this.getConentWay2 = GetContentWay2.getIndexWayBayValue(getContentWayValue);
     }
 
     public GetContentWay getGetContentWay() {
@@ -334,6 +337,10 @@ public class GetNovelConfigDto implements Serializable {
 
     public void setGetContentWay(GetContentWay getContentWay) {
         this.getContentWay = getContentWay;
+    }
+
+    public GetContentWay2 getGetContentWay2() {
+        return getConentWay2;
     }
 
     public String getItemKey() {
