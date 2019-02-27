@@ -144,15 +144,17 @@ public class NovelController extends Controller {
         
         this.novelService.update(id);
         
-        Novel novel = Novel.dao.findById(id).toBean();
+        this.novelIndex();
         
-        if (novel != null) {
-            setAttr("novel", novel);
-            List<NovelItem> novelItems = novel.getNovelItems();
-            setAttr("novelItems", novelItems);
-        }
+//        Novel novel = Novel.dao.findById(id).toBean();
+//        
+//        if (novel != null) {
+//            setAttr("novel", novel);
+//            List<NovelItem> novelItems = novel.getNovelItems();
+//            setAttr("novelItems", novelItems);
+//        }
        
-        render("/page/169/index.jsp");
+//        render("/page/169/index.jsp");
     }
     
     /**
