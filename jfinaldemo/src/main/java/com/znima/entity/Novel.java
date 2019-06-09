@@ -100,7 +100,7 @@ public class Novel extends Model<Novel> {
      * @return 
      */
     public List<NovelItem> getNovelItems() {
-        List<NovelItem> list = NovelItem.dao.find("SELECT id,url,title, createTime, file_length FROM `novelItem` WHERE norvelId=" + get("id") + " order by id");
+        List<NovelItem> list = NovelItem.dao.find("SELECT id,url,title, createTime, file_length FROM `novelItem` WHERE novelId=" + get("id") + " order by id");
         
         for (NovelItem item : list) {
             item.toBean();
@@ -120,7 +120,7 @@ public class Novel extends Model<Novel> {
             page = 1;
         }
         
-        return NovelItem.dao.paginate(page, 100, "SELECT id,url,title, createTime ", "FROM `novelItem` WHERE norvelId=" + get("id") + " order by id " + sortType);
+        return NovelItem.dao.paginate(page, 100, "SELECT id,url,title, createTime ", "FROM `novelItem` WHERE novelId=" + get("id") + " order by id " + sortType);
     }
     
     /**
@@ -128,7 +128,7 @@ public class Novel extends Model<Novel> {
      * @return 
      */
     public List<NovelItem> getNovelItemsWithContent() {
-        List<NovelItem> list = NovelItem.dao.find("SELECT id,url,title, contentFile, createTime FROM `novelItem` WHERE norvelId=" + get("id") + " order by id");
+        List<NovelItem> list = NovelItem.dao.find("SELECT id,url,title, contentFile, createTime FROM `novelItem` WHERE novelId=" + get("id") + " order by id");
         
         for (NovelItem item : list) {
             item.toBean();
@@ -138,13 +138,13 @@ public class Novel extends Model<Novel> {
     }
     
     public NovelItem getLastestItem() {
-        NovelItem item = NovelItem.dao.findFirst("SELECT id,url,title, contentFile, createTime FROM `novelItem` WHERE norvelId=" + get("id") + " order by id desc limit 0,1");
+        NovelItem item = NovelItem.dao.findFirst("SELECT id,url,title, contentFile, createTime FROM `novelItem` WHERE novelId=" + get("id") + " order by id desc limit 0,1");
         
         return item;
     }
     
     public List<Map<String, Object>> getUndownloadNovelItems() {
-        List<NovelItem> list = NovelItem.dao.find("SELECT id,url,title,createTime FROM `novelItem` WHERE contentFile is null and norvelId=" + get("id") + " order by id");
+        List<NovelItem> list = NovelItem.dao.find("SELECT id,url,title,createTime FROM `novelItem` WHERE contentFile is null and novelId=" + get("id") + " order by id");
         
         for (NovelItem item : list) {
             item.toBean();

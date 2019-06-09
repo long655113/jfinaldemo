@@ -21,7 +21,7 @@ public class NovelItem extends Model<NovelItem> {
     private String url;   //章节地址
     private Integer nextId;
     private Integer preId;    //上一章
-    private Integer norvelId; //小说ID
+    private Integer novelId; //小说ID
     private String title; //章节标题
     private String content;   //章节内容
     private String contentFile; //章节内容文件
@@ -61,12 +61,12 @@ public class NovelItem extends Model<NovelItem> {
         this.preId = preId;
     }
 
-    public Integer getNorvelId() {
-        return norvelId;
+    public Integer getNovelId() {
+        return novelId;
     }
 
-    public void setNorvelId(Integer norvelId) {
-        this.norvelId = norvelId;
+    public void setNovelId(Integer novelId) {
+        this.novelId = novelId;
     }
 
     public String getTitle() {
@@ -126,7 +126,7 @@ public class NovelItem extends Model<NovelItem> {
         item.url = item.get("url");   //章节地址
         item.nextId = item.get("nextId");
         item.preId = item.get("preId");    //上一章
-        item.norvelId = item.get("norvelId"); //小说ID
+        item.novelId = item.get("novelId"); //小说ID
         item.title = item.get("title"); //章节标题
 //        item.content = item.get("content");   //章节内容
         item.remark = item.get("remark");    //备注
@@ -145,7 +145,7 @@ public class NovelItem extends Model<NovelItem> {
     }
 
     public boolean deleteByNovelId(Integer novelId) {
-        int update = Db.update("DELETE FROM novelItem WHERE norvelId=?", novelId);
+        int update = Db.update("DELETE FROM novelItem WHERE novelId=?", novelId);
         return update > 0;
     }
 
@@ -155,20 +155,20 @@ public class NovelItem extends Model<NovelItem> {
      * @return
      */
     public List<NovelItem> findUndownloadItems() {
-        List<NovelItem> novels = dao.find("SELECT t1.norvelId, t1.createTime,min(t1.id) id\n"
+        List<NovelItem> novels = dao.find("SELECT t1.novelId, t1.createTime,min(t1.id) id\n"
                 + "FROM novelItem t1,\n"
                 + "(\n"
-                + "SELECT norvelId,MIN(createTime) createTime\n"
+                + "SELECT novelId,MIN(createTime) createTime\n"
                 + "FROM \n"
                 + "(\n"
                 + "SELECT *\n"
                 + "FROM novelItem t1\n"
                 + "where contentFile IS NULL\n"
                 + ") t\n"
-                + "GROUP BY norvelId\n"
+                + "GROUP BY novelId\n"
                 + ") t2\n"
-                + "WHERE t1.norvelId = t2.norvelId AND t1.createTime=t2.createTime  AND t1.contentFile IS NULL \n"
-                + "GROUP BY t1.norvelId, t1.createTime");
+                + "WHERE t1.novelId = t2.novelId AND t1.createTime=t2.createTime  AND t1.contentFile IS NULL \n"
+                + "GROUP BY t1.novelId, t1.createTime");
 
         for (NovelItem item : novels) {
             item.toBean();
@@ -183,7 +183,7 @@ public class NovelItem extends Model<NovelItem> {
      * @return
      */
     public List<NovelItem> findUndownloadRandomItems(int limit) {
-        List<NovelItem> novels = dao.find("SELECT norvelId, createTime, id \n"
+        List<NovelItem> novels = dao.find("SELECT novelId, createTime, id \n"
                 + "FROM NOVELITEM  \n" +
                 "where CONTENTFILE  is null \n" +
                 "order by random() \n" +
@@ -203,9 +203,9 @@ public class NovelItem extends Model<NovelItem> {
      * @return 
      */
     public List<NovelItem> findSmallItems(int smallFileLength, int limit) {
-        List<NovelItem> novels = dao.find("SELECT norvelId, createTime, id, contentFile \n"
+        List<NovelItem> novels = dao.find("SELECT novelId, createTime, id, contentFile \n"
                 + "FROM NOVELITEM  \n" +
-                "where DAY_OF_YEAR(now()) - DAY_OF_YEAR(createTime) < 2 and FILE_LENGTH < " + smallFileLength + 
+                "where DATEDIFF('DAY', createTime, NOW()) < 2 and FILE_LENGTH < " + smallFileLength + 
                 " order by random() \n" +
                 " limit " + limit);
 
@@ -218,6 +218,6 @@ public class NovelItem extends Model<NovelItem> {
 
     @Override
     public String toString() {
-        return "NovelItem{" + "id=" + id + ", url=" + url + ", nextId=" + nextId + ", preId=" + preId + ", norvelId=" + norvelId + ", title=" + title + ", content=" + content + ", remark=" + remark + ", createTime=" + createTime + '}';
+        return "NovelItem{" + "id=" + id + ", url=" + url + ", nextId=" + nextId + ", preId=" + preId + ", novelId=" + novelId + ", title=" + title + ", content=" + content + ", remark=" + remark + ", createTime=" + createTime + '}';
     }
 }

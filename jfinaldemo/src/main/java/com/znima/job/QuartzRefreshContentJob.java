@@ -76,7 +76,8 @@ public class QuartzRefreshContentJob implements Job {
         
         List<NovelItem> novels = NovelItem.dao.findSmallItems(500, 10);
         
-        logger.info("QuartzRefreshContentJob: novels:" + novels);
+//        logger.info("QuartzRefreshContentJob: novels:" + novels);
+        logger.info("refreshMarkSet->" + refreshMarkSet);
         for (NovelItem novelItem : novels) {
             
             String content = novelItem.getContent();
@@ -86,10 +87,10 @@ public class QuartzRefreshContentJob implements Job {
             
             boolean hasMark = false;
             
-            logger.info("refreshMarkSet->" + refreshMarkSet);
             for (String mark : refreshMarkSet) {
                 if (content.contains(mark)) {
                     hasMark = true;
+                    logger.info("refresh:" + novelItem);
                 }
             }
             

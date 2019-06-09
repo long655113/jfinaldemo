@@ -59,7 +59,7 @@
     <div class="nav">
         <ul>
             <li><a href="${pageContext.request.contextPath}/">首页</a></li>
-            <li><a href="/player/index.html?url=http://zjl.hmxingkong.com/novel/novel/voice/${novel.id}">音乐</a></li>
+            <li><a href="javascript:var uri=document.origin; var url=uri + '/player/index.html?url=' + uri + '/novel/novel/voice/${novel.id}'; document.location=url;">音乐</a></li>
             <li><a href="http://m.wenxuemi.com/quanben/">全本</a></li>
             <li><a href="http://m.wenxuemi.com/bookcase.php">书架</a></li>
             <li><a href="http://m.wenxuemi.com/bookcase.html">足迹</a></li>

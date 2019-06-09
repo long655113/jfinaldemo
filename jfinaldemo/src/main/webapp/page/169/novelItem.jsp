@@ -13,7 +13,7 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico"/>
 <meta http-equiv="Cache-Control" content="no-transform"/>
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/read.css?version=2018032723"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/read.css?version=20190603"/>
 <script src="${pageContext.request.contextPath}/js/ajax.js?version=201701312053" ></script>
 <script src="${pageContext.request.contextPath}/js/read.js?version=2018082423" ></script>
 <script src="${pageContext.request.contextPath}/js/cookie.js?version=test1" ></script>
@@ -60,7 +60,7 @@
             <table cellpadding="0" cellspacing="0">
                 <tr class="itemDir1">
                     <td class="prev"><a id="pt_prev" href="${pageContext.request.contextPath}/novel/read/${novelItem.preId}">上一章</a></td>
-                    <td class="mulu"><a id="pt_mulu" href="${pageContext.request.contextPath}/novel/novelIndex/${novelItem.norvelId}">目录</a></td>
+                    <td class="mulu"><a id="pt_mulu" href="${pageContext.request.contextPath}/novel/novelIndex/${novelItem.novelId}">目录</a></td>
                     <c:if test="${novelItem.nextId != null}">
                         <td class="next"><a id="pb_next" href="${pageContext.request.contextPath}/novel/read/${novelItem.nextId}">下一章</a></td>
                     </c:if>
@@ -84,7 +84,7 @@
             <table cellpadding="0" cellspacing="0">
                 <tr class="itemDir2">
                     <td class="prev"><a id="pb_prev" href="${pageContext.request.contextPath}/novel/read/${novelItem.preId}">上一章</a></td>
-                    <td class="mulu"><a id="pb_mulu" href="${pageContext.request.contextPath}/novel/novelIndex/${novelItem.norvelId}">目录</a></td>
+                    <td class="mulu"><a id="pb_mulu" href="${pageContext.request.contextPath}/novel/novelIndex/${novelItem.novelId}">目录</a></td>
                     <c:if test="${novelItem.nextId != null}">
                         <td class="next"><a id="pb_next" href="${pageContext.request.contextPath}/novel/read/${novelItem.nextId}">下一章</a></td>
                     </c:if>

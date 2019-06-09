@@ -14,7 +14,6 @@ import com.znima.dto.NovelItemDto;
 import com.znima.entity.GetNovelConfig;
 import com.znima.entity.Novel;
 import com.znima.entity.NovelItem;
-import com.znima.job.QuartzJob;
 import com.znima.result.Msg;
 import com.znima.util.FileUtil;
 import com.znima.util.JsoupUtil;
@@ -25,7 +24,6 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -37,9 +35,9 @@ import org.slf4j.LoggerFactory;
  */
 public class NovelService {
 
-    private static Logger logger = LoggerFactory.getLogger(NovelService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NovelService.class);
 
-    private final static String logPre = "[" + NovelService.class.getSimpleName() + "]";
+    private final static String LOGPRE = "[" + NovelService.class.getSimpleName() + "]";
 
     public List<Novel> getNovels() {
         List<Novel> novels = Novel.dao.getNovels();
@@ -52,7 +50,7 @@ public class NovelService {
 
         NovelDto novelDto = JsoupUtil.getNovel(configDto);
 
-        logger.info(logPre + "addNovel: novel:" + novelDto);
+        LOGGER.info(LOGPRE + "addNovel: novel:" + novelDto);
 
         if (novelDto == null) {
             msg.setCode("110");
@@ -72,7 +70,7 @@ public class NovelService {
 
         Integer id = novel.get("id");
 
-        logger.info(this.logPre + "addNovel, 章节数：" + novelDto.getItems().size());
+        LOGGER.info(LOGPRE + "addNovel, 章节数：" + novelDto.getItems().size());
 
         if (novelDto.getItems().isEmpty()) {
             msg.setCode("0002");
@@ -124,12 +122,12 @@ public class NovelService {
     public static void saveItem(List<NovelItemDto> itemDtos, GetNovelConfigDto configDto, Integer novelId, NovelItem lastItem) {
         for (int i = 0; i < itemDtos.size(); i++) {
             NovelItemDto itemDto = itemDtos.get(i);
-            logger.info(logPre + "saveItem,url:" + itemDto.getUrl());
+            LOGGER.info(LOGPRE + "saveItem,url:" + itemDto.getUrl());
 //            String itemContent = configDto.getGetContentWay().getContent(itemDto.getUrl(), configDto.getItemKey());
 
             NovelItem novelItem = new NovelItem();
             novelItem.put("url", itemDto.getUrl());
-            novelItem.put("norvelId", novelId);
+            novelItem.put("novelId", novelId);
             novelItem.put("title", itemDto.getItemName());
 //            novelItem.put("content", itemContent);
             novelItem.put("createTime", new Date());
@@ -194,7 +192,7 @@ public class NovelService {
         }
 
 //        item.set("content", itemContent);
-        String configFilePath = MyConstants.novelBasePath + item.getNorvelId() + "/" + item.getId() + ".txt";
+        String configFilePath = MyConstants.novelBasePath + item.getNovelId() + "/" + item.getId() + ".txt";
         boolean result = FileUtil.saveFile(itemContent, configFilePath);
         if (result) {
             item.set("contentFile", configFilePath);
@@ -226,7 +224,7 @@ public class NovelService {
         String indexUrl = novelOld.get("url");
 
         if (indexUrl == null) {
-            logger.info(logPre + "没有目录url略过:" + ModelUtil.modelToMap(novelOld));
+            LOGGER.info(LOGPRE + "没有目录url略过:" + ModelUtil.modelToMap(novelOld));
             return;
         }
 
@@ -237,12 +235,12 @@ public class NovelService {
         }
 
         getNovelConfigDto.setIndexUrl(indexUrl);
-        logger.info("novelConfigDto:" + getNovelConfigDto);
+        LOGGER.info("novelConfigDto:" + getNovelConfigDto);
 
         NovelDto novelDto = JsoupUtil.getNovel(getNovelConfigDto);
 
         if (novelDto == null || novelDto.getItems() == null || novelDto.getItems().isEmpty()) {
-            logger.info(logPre + "未获取取到章节" + ModelUtil.modelToMap(novelOld));
+            LOGGER.info(LOGPRE + "未获取取到章节" + ModelUtil.modelToMap(novelOld));
             return;
         }
 
@@ -259,7 +257,7 @@ public class NovelService {
             }
         }
 
-        logger.info(logPre + "update lastIndex:" + lastIndex);
+        LOGGER.info(LOGPRE + "update lastIndex:" + lastIndex);
         //更新章节
         if (items != null && lastIndex < items.size() - 1) {
             List<NovelItemDto> updateItemList = items.subList(lastIndex + 1, items.size());
@@ -267,12 +265,12 @@ public class NovelService {
 //            lastItem = lastItemDto != null ? NovelItem.dao.findById(lastItemDto.get("id")) : null;
             if (lastItemDto != null && lastIndex == -1) {
                 //如果本来有章节，但是却找不到匹配的，那就不要去更新
-                logger.warn("未找到匹配的最后一个章节，怀疑是没有下载到完整的目录页");
+                LOGGER.warn("未找到匹配的最后一个章节，怀疑是没有下载到完整的目录页");
                 return;
             }
 
             if (updateItemList.size() > 60) {
-                logger.info("非常规更新->last:" + lastItemDto + ", list:" + updateItemList);
+                LOGGER.info("非常规更新->last:" + lastItemDto + ", list:" + updateItemList);
             }
 
             saveItem(updateItemList, getNovelConfigDto, id, lastItemDto);
@@ -304,7 +302,7 @@ public class NovelService {
             return msg;
         }
 
-        String configFilePath = MyConstants.novelBasePath + item.getNorvelId() + "/" + item.getId() + ".txt";
+        String configFilePath = MyConstants.novelBasePath + item.getNovelId() + "/" + item.getId() + ".txt";
         boolean result = FileUtil.saveFile(content, configFilePath);
         if (result) {
             item.set("contentFile", configFilePath);
@@ -409,7 +407,7 @@ public class NovelService {
         try {
             PdfUtil.outputPdf(servletOS, novelItems);
         } catch (Exception ex) {
-            logger.error(logPre + ex.getMessage(), ex);
+            LOGGER.error(LOGPRE + ex.getMessage(), ex);
         }
     }
 
@@ -452,10 +450,10 @@ public class NovelService {
 
                 NovelItem item = NovelItem.dao.findById(itemId);
 
-                Integer norvelId = item.get("norvelId");
+                Integer novelId = item.get("novelId");
                 String contentFile = item.get("contentFile");
                 if (item.delete() && contentFile != null && !contentFile.trim().equals("")) {
-                    String filePath = MyConstants.novelBasePath + norvelId + "/" + itemId + ".txt";
+                    String filePath = MyConstants.novelBasePath + novelId + "/" + itemId + ".txt";
                     FileUtil.deleteFile(filePath);
                 }
             }
@@ -472,7 +470,7 @@ public class NovelService {
     /**
      * 删除指定章节ID前的章节，从数据删除章节，从磁盘上删除章节内容
      *
-     * @param novelItemIds
+     * @param novelItemId
      * @return
      */
     public Msg deleteBeforeItems(Integer novelItemId) {
@@ -486,7 +484,7 @@ public class NovelService {
             return msg;
         }
 
-        Novel novel = Novel.dao.findById(novelItem.getNorvelId());
+        Novel novel = Novel.dao.findById(novelItem.getNovelId());
 
         List<NovelItem> novelItems = novel.getNovelItems();
 
@@ -499,10 +497,10 @@ public class NovelService {
                 }
 //                NovelItem item = NovelItem.dao.findById(itemId);
                 Integer itemId = item.getId();
-                Integer norvelId = item.get("norvelId");
+                Integer novelId = item.get("novelId");
                 String contentFile = item.get("contentFile");
                 if (item.delete() && contentFile != null && !contentFile.trim().equals("")) {
-                    String filePath = MyConstants.novelBasePath + norvelId + "/" + itemId + ".txt";
+                    String filePath = MyConstants.novelBasePath + novelId + "/" + itemId + ".txt";
                     FileUtil.deleteFile(filePath);
                 }
             }
