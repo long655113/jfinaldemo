@@ -95,6 +95,22 @@ public enum GetNovelNameWay {
 
                     return novelName;
                 }
+            },TAG(5, "tag") {
+                
+                @Override
+                public String getNovelName(Document doc, String[] keys) {
+                    String novelName = null;
+                    try {
+                        Elements tags = doc.getElementsByTag(keys[0]);
+                        Integer index = Integer.parseInt(keys[1]);
+                        Element tag = tags.get(index);
+                        novelName = tag.text();
+                    } catch (Exception e) {
+                        Logger.getLogger(GetImgWay.class.getName()).log(Level.SEVERE, "获取小说名错误", e);
+                    }
+
+                    return novelName;
+                }
             };
     private int value;
     private String name;

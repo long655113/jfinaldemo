@@ -38,6 +38,7 @@
                     <option value="1">id</option>
                     <option value="2" >class</option>
                     <option value="4" selected>meta</option>
+                    <option value="5">tag</option>
                 </select>
             </div>
             <div>小说名称KEY1(id)：<input type="text" name="novelNameKeys" value="property" /></div>
