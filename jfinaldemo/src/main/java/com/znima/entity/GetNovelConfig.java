@@ -32,6 +32,8 @@ public class GetNovelConfig extends Model<GetNovelConfig> {
     private Integer getContentWayValue;   //获取章节内容策略1:id2:class
     private String itemKey;   //章节标志
     private Date createTime;
+    private String nextPMark;   //章节分页显示时，是否有下一页的标志
+    private String nextPSelect; // cssSelect 下一面a标签的获取值
     
     public GetNovelConfig toBean() {
         GetNovelConfig item = this;
@@ -53,6 +55,8 @@ public class GetNovelConfig extends Model<GetNovelConfig> {
         item.getContentWayValue = item.get("getContentWayValue");
         item.itemKey = item.get("itemKey");
         item.createTime = item.get("createTime");
+        item.itemKey = item.get("nextPMark");
+        item.itemKey = item.get("nextPSelect");
         
         return item;
     }
@@ -191,6 +195,22 @@ public class GetNovelConfig extends Model<GetNovelConfig> {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getNextPMark() {
+        return nextPMark;
+    }
+
+    public void setNextPMark(String nextPMark) {
+        this.nextPMark = nextPMark;
+    }
+
+    public String getNextPSelect() {
+        return nextPSelect;
+    }
+
+    public void setNextPSelect(String nextPSelect) {
+        this.nextPSelect = nextPSelect;
     }
 
     public static final GetNovelConfig dao = new GetNovelConfig();

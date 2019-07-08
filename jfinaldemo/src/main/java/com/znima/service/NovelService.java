@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,6 +191,35 @@ public class NovelService {
             item.set("createTime", new Date());
             item.update();
             return msg;
+        } else {
+            String nextPMark = configDto.getNextPMark();
+            String nextPSelect = configDto.getNextPSelect();
+            if (nextPMark != null
+                    && !nextPMark.trim().equals("")
+                    && nextPSelect != null
+                    && !nextPSelect.trim().equals("")
+                    && itemContent.contains(nextPMark)
+                    ) {
+                Document doc = JsoupUtil.getDoc(url);
+                Elements nextPageEles = doc.select(nextPSelect);
+                if (nextPageEles.size() > 0) {
+                    String nextUri = nextPageEles.first().attr("href");
+                    String nextUrl;
+                    if (nextUri.startsWith("/")) {
+                        nextUrl = urlRoot + nextUri;
+                    } else {
+                        int lastIndexOf = url.lastIndexOf("/");
+                        nextUrl = url.substring(lastIndexOf, lastIndexOf + 1) + nextUri;
+                    }
+                    String itemContent2 = configDto.getGetContentWay().getContent(nextUrl, configDto.getItemKey());
+                    if (itemContent2 == null || itemContent2.trim().equals("") || itemContent2.length() < 100) {
+                        itemContent2 = configDto.getGetContentWay2().getContent(nextUrl, configDto.getItemKey());
+                    }
+                    itemContent = itemContent + itemContent2;
+                    
+                }
+                
+            }
         }
 
 //        item.set("content", itemContent);

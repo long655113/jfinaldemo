@@ -61,6 +61,9 @@ public class GetNovelConfigDto implements Serializable {
     private GetContentWay2 getConentWay2;
     private String itemKey; //章节KEY
     
+    private String nextPMark;   //章节分页显示时，是否有下一页的标志
+    private String nextPSelect; // cssSelect 下一面a标签的获取值
+    
     public GetNovelConfigDto() {}
 
     public GetNovelConfigDto(Map<String, String[]> params) throws Exception {
@@ -93,6 +96,9 @@ public class GetNovelConfigDto implements Serializable {
 
         this.setGetContentWayValue((Integer) configEntity.get("getContentWayValue"));
         this.itemKey = configEntity.get("itemKey");
+        
+        this.nextPMark = configEntity.get("nextPMark");
+        this.nextPSelect = configEntity.get("nextPSelect");
     }
 
     private void inject(Object obj, String prop, String[] values) throws Exception {
@@ -366,6 +372,22 @@ public class GetNovelConfigDto implements Serializable {
 
     public void setGetImgWay(GetImgWay getImgWay) {
         this.getImgWay = getImgWay;
+    }
+
+    public String getNextPMark() {
+        return nextPMark;
+    }
+
+    public void setNextPMark(String nextPMark) {
+        this.nextPMark = nextPMark;
+    }
+
+    public String getNextPSelect() {
+        return nextPSelect;
+    }
+
+    public void setNextPSelect(String nextPSelect) {
+        this.nextPSelect = nextPSelect;
     }
 
     @Override
